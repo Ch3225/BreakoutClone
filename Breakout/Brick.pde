@@ -1,4 +1,3 @@
-// 定义砖块
 int brickWidth = 60;
 int brickHeight = 20;
 
