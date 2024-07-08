@@ -35,10 +35,14 @@ void draw() {
   // 绘制和更新球
   if (ballLaunched) {
     updateBall();
-    drawBall();
-  } else {
+  }
+  drawBall(); // 在未发射时也绘制小球
+
+  // 绘制发射方向箭头
+  if (!ballLaunched) {
     drawLaunchArrow();
   }
+  
   // 绘制挡板
   updatePaddle();
   drawPaddle();
@@ -54,9 +58,9 @@ void draw() {
 void keyPressed() {
   if (!ballLaunched) {
     if (key == 'a' || key == 'A') {
-      launchDirection -= PI / 18; // 向左旋转10度
+      launchDirection -= PI / 36; // 向左旋转5度
     } else if (key == 'd' || key == 'D') {
-      launchDirection += PI / 18; // 向右旋转10度
+      launchDirection += PI / 36; // 向右旋转5度
     } else if (key == 'j' || key == 'J') {
       launchBall();
     }

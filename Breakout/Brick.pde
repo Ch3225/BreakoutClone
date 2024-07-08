@@ -1,21 +1,25 @@
 int brickWidth = 60;
 int brickHeight = 20;
+int brickGap = 4;
 
 void drawBrick(float x, float y) {
   fill(255);
-  rect(x, y, brickWidth, brickHeight);
+  float gapOffset = brickGap / 2.0;
+  rect(x + gapOffset, y + gapOffset, brickWidth - brickGap, brickHeight - brickGap);
 }
 
 void checkBallBrickCollision() {
   for (int i = 0; i < brickRows; i++) {
     for (int j = 0; j < brickCols; j++) {
       if (bricks[i][j]) {
-        float brickX = j * brickWidth;
-        float brickY = i * brickHeight;
-        
+        float brickX = j * brickWidth + brickGap / 2;
+        float brickY = i * brickHeight + brickGap / 2;
+        float adjustedBrickWidth = brickWidth - brickGap;
+        float adjustedBrickHeight = brickHeight - brickGap;
+
         // 球心与砖块边缘的距离
-        float closestX = constrain(ballX, brickX, brickX + brickWidth);
-        float closestY = constrain(ballY, brickY, brickY + brickHeight);
+        float closestX = constrain(ballX, brickX, brickX + adjustedBrickWidth);
+        float closestY = constrain(ballY, brickY, brickY + adjustedBrickHeight);
         
         // 计算距离
         float distanceX = ballX - closestX;
@@ -28,12 +32,12 @@ void checkBallBrickCollision() {
           bricks[i][j] = false;
           
           // 判断碰撞类型
-          boolean isHorizontal = ballX >= brickX && ballX <= brickX + brickWidth;
-          boolean isVertical = ballY >= brickY && ballY <= brickY + brickHeight;
+          boolean isHorizontal = ballX >= brickX && ballX <= brickX + adjustedBrickWidth;
+          boolean isVertical = ballY >= brickY && ballY <= brickY + adjustedBrickHeight;
 
           if (isHorizontal) {
             // 上下边碰撞
-            if (ballY > brickY + brickHeight / 2) {
+            if (ballY > brickY + adjustedBrickHeight / 2) {
               // 从下方撞击砖块，反弹向下
               ballSpeedY = abs(ballSpeedY);
             } else {
@@ -42,7 +46,7 @@ void checkBallBrickCollision() {
             }
           } else if (isVertical) {
             // 左右边碰撞
-            if (ballX > brickX + brickWidth / 2) {
+            if (ballX > brickX + adjustedBrickWidth / 2) {
               // 从右侧撞击砖块，反弹向右
               ballSpeedX = abs(ballSpeedX);
             } else {
