@@ -1,21 +1,24 @@
+// Brick.pde
 int brickWidth = 60;
 int brickHeight = 20;
 int brickGap = 4;
 
 void drawBrick(float x, float y) {
+  pushMatrix();
+  translate(x + (brickWidth * scaleFactor) / 2, y + (brickHeight * scaleFactor) / 2, 0);
   fill(255);
-  float gapOffset = brickGap / 2.0;
-  rect(x + gapOffset, y + gapOffset, brickWidth - brickGap, brickHeight - brickGap);
+  box((brickWidth - 2) * scaleFactor, (brickHeight - 2) * scaleFactor, 10 * scaleFactor); // 添加一个小间隙
+  popMatrix();
 }
 
 void checkBallBrickCollision() {
   for (int i = 0; i < brickRows; i++) {
     for (int j = 0; j < brickCols; j++) {
       if (bricks[i][j]) {
-        float brickX = j * brickWidth + brickGap / 2;
-        float brickY = i * brickHeight + brickGap / 2;
-        float adjustedBrickWidth = brickWidth - brickGap;
-        float adjustedBrickHeight = brickHeight - brickGap;
+        float brickX = j * brickWidth * scaleFactor + brickGap / 2 * scaleFactor;
+        float brickY = i * brickHeight * scaleFactor + brickGap / 2 * scaleFactor;
+        float adjustedBrickWidth = (brickWidth - brickGap) * scaleFactor;
+        float adjustedBrickHeight = (brickHeight - brickGap) * scaleFactor;
 
         // 球心与砖块边缘的距离
         float closestX = constrain(ballX, brickX, brickX + adjustedBrickWidth);
@@ -27,7 +30,7 @@ void checkBallBrickCollision() {
         float distance = sqrt(distanceX * distanceX + distanceY * distanceY);
         
         // 碰撞检测
-        if (distance < ballRadius) {
+        if (distance < ballRadius * scaleFactor) {
           // 碰撞发生
           bricks[i][j] = false;
           
@@ -56,8 +59,9 @@ void checkBallBrickCollision() {
           } else {
             // 斜侧面碰撞，计算反弹角度
             float angle = atan2(distanceY, distanceX);
-            ballSpeedX = 5 * cos(angle);
-            ballSpeedY = 5 * sin(angle);
+            float ballSpeed = sqrt(ballSpeedX * ballSpeedX + ballSpeedY * ballSpeedY); // 计算球速;
+            ballSpeedX = ballSpeed * cos(angle);
+            ballSpeedY = ballSpeed * sin(angle);
           }
           return; // 立即退出循环，防止多次碰撞检测
         }

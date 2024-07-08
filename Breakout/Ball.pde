@@ -24,5 +24,10 @@ void updateBall() {
 }
 
 void drawBall() {
-  ellipse(ballX, ballY, ballRadius * 2, ballRadius * 2);
+  pushMatrix();
+  translate(ballX, ballY, ballRadius * scaleFactor);
+  noStroke();
+  fill(255);
+  sphere(ballRadius * scaleFactor);
+  popMatrix();
 }

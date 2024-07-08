@@ -24,14 +24,11 @@ void reset() {
 }
 
 void draw() {
-  background(64);
-  // 添加白色光源
+  background(32);
+  // 添加光源
   directionalLight(255, 255, 255, 0, 0, -1);
-  // 添加从挡板向砖块的光源
-  directionalLight(58, 72, 77, 0, -1, 0);
-  
   // 设置摄像机
-  camera(width / 2, height / 2 + 1000, (height / 2) / tan(PI / 6) * 1.2, width / 2, height / 2, 0, 0, 1, 0);
+  camera(width / 2, height / 2 + 500, (height / 2) / tan(PI / 6) * 1.2, width / 2, height / 2, 0, 0, 1, 0);
   
   // 绘制背景盒
   drawBox();
@@ -88,8 +85,8 @@ void drawLaunchArrow() {
 }
 
 void launchBall() {
-  ballSpeedX = 5 * cos(launchDirection) * scaleFactor;
-  ballSpeedY = 5 * sin(launchDirection) * scaleFactor;
+  ballSpeedX = 5 * cos(launchDirection);
+  ballSpeedY = 5 * sin(launchDirection);
   ballLaunched = true;
 }
 
