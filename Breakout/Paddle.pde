@@ -1,4 +1,3 @@
-// 定义挡板
 float paddleX;
 float paddleWidth = 80;
 float paddleHeight = 10;
@@ -9,11 +8,16 @@ void initPaddle() {
 }
 
 void updatePaddle() {
-  if (keyPressed) {
-    if (key == 'a' || key == 'A') {
-      paddleX -= paddleSpeed;
-    } else if (key == 'd' || key == 'D') {
-      paddleX += paddleSpeed;
+  if (ballLaunched) {
+    if (keyPressed) {
+      paddleSpeed=5;
+      if (key == 'a' || key == 'A') {
+        paddleX -= paddleSpeed;
+      } else if (key == 'd' || key == 'D') {
+        paddleX += paddleSpeed;
+      }
+    }else{
+      paddleSpeed=0;
     }
   }
   paddleX = constrain(paddleX, 0, width - paddleWidth);

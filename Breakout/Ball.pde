@@ -1,4 +1,3 @@
-// 定义球
 float ballX, ballY;
 float ballSpeedX, ballSpeedY;
 float ballRadius = 10;
@@ -6,8 +5,8 @@ float ballRadius = 10;
 void initBall() {
   ballX = width / 2;
   ballY = height / 2;
-  ballSpeedX = random(-5, 5);
-  ballSpeedY = random(2, 5);
+  ballSpeedX = 0;
+  ballSpeedY = 0;
 }
 
 void updateBall() {
