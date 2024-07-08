@@ -6,6 +6,9 @@ float launchDirection = 0; // 发射方向的角度
 float scaleFactor; // 缩放因子
 boolean[] keys = new boolean[128]; // 存储按键状态
 
+int score = 0;
+int combo = 0;
+
 void setup() {
   size(1800, 1200, P3D); // 使用P3D进行3D渲染
   scaleFactor = height / 400.0; // 计算缩放因子
@@ -17,11 +20,9 @@ void setup() {
   public void run() {
     while (true) {
       println("Thread is running...");
+
       // 物理计算代码...
       try {
-        if (ballLaunched) {
-
-        } 
         Thread.sleep(15);
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -40,6 +41,8 @@ void reset() {
   }
   initBall();
   initPaddle();
+  score = 0;
+  combo = 0;
 }
 
 void draw() {
@@ -48,7 +51,8 @@ void draw() {
   directionalLight(255, 255, 255, 0, 0, -1);
   // 添加从挡板向砖块的光源
   // directionalLight(58, 72, 77, 0, -1, 0);
-  
+
+
   // 设置摄像机
   camera(width / 2, height / 2 + 1000, (height / 2) / tan(PI / 6) * 1.2, width / 2, height / 2, 0, 0, 1, 0);
   
@@ -72,18 +76,35 @@ void draw() {
   if (!ballLaunched) {
     drawLaunchArrow();
   } 
-          updateBall();
-          updatePaddle();
-          checkBallBrickCollision();
-          checkBallPaddleCollision();
+  updateBall();
+  updatePaddle();
+  checkBallBrickCollision();
+  checkBallPaddleCollision();
+
+  // 保存当前的摄像机设置
+  pushMatrix();
+  camera();
+
+  // 在屏幕上绘制文字
+  fill(255);
+  textSize(32);
+  text("Score: " + score, width - 200, 50);
+  text("Combo: " + combo, width - 200, 100);
+
+  // 恢复之前的摄像机设置
+  popMatrix();
 }
 
 void keyPressed() {
-  keys[key] = true;
+  if(key<128){
+    keys[key] = true;
+  }
 }
 
 void keyReleased() {
-  keys[key] = false;
+  if(key<128){
+    keys[key] = false;
+  }
 }
 
 

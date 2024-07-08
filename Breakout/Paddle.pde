@@ -48,6 +48,7 @@ void checkBallPaddleCollision() {
     float ballSpeed = sqrt(ballSpeedX * ballSpeedX + ballSpeedY * ballSpeedY); // 计算球速;
     ballSpeedX = ballSpeed * sin(angle);
     ballSpeedY = -ballSpeed * cos(angle);
+    combo = 0;  // 重置连击次数
   }
 }
 

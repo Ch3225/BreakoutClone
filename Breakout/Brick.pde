@@ -33,6 +33,7 @@ void checkBallBrickCollision() {
         if (distance < ballRadius * scaleFactor) {
           // 碰撞发生
           bricks[i][j] = false;
+          hit(); // 击中砖块
           
           // 判断碰撞类型
           boolean isHorizontal = ballX >= brickX && ballX <= brickX + adjustedBrickWidth;
@@ -68,4 +69,9 @@ void checkBallBrickCollision() {
       }
     }
   }
+}
+
+void hit() {
+  score += 500;
+  combo += 1;
 }
