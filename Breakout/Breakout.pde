@@ -1,3 +1,4 @@
+
 int brickRows = 5;
 int brickCols = 10;
 boolean[][] bricks = new boolean[brickRows][brickCols];
@@ -41,6 +42,7 @@ void reset() {
   }
   initBall();
   initPaddle();
+  setupCylinders();
   score = 0;
   combo = 0;
 }
@@ -71,6 +73,8 @@ void draw() {
   drawBall();
   // 绘制挡板
   drawPaddle();
+  // 绘制圆柱体
+  drawCylinders();
 
   // 更新球的位置
   if (!ballLaunched) {
