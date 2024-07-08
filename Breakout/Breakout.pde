@@ -4,12 +4,31 @@ boolean[][] bricks = new boolean[brickRows][brickCols];
 boolean ballLaunched = false;
 float launchDirection = 0; // 发射方向的角度
 float scaleFactor; // 缩放因子
+boolean[] keys = new boolean[128]; // 存储按键状态
 
 void setup() {
   size(1800, 1200, P3D); // 使用P3D进行3D渲染
   scaleFactor = height / 400.0; // 计算缩放因子
   lights();
   reset();
+  frameRate(60);
+
+  new Thread(new Runnable() {
+  public void run() {
+    while (true) {
+      println("Thread is running...");
+      // 物理计算代码...
+      try {
+        if (ballLaunched) {
+
+        } 
+        Thread.sleep(15);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+}).start();
 }
 
 void reset() {
@@ -28,7 +47,7 @@ void draw() {
   // 添加白色光源
   directionalLight(255, 255, 255, 0, 0, -1);
   // 添加从挡板向砖块的光源
-  directionalLight(58, 72, 77, 0, -1, 0);
+  // directionalLight(58, 72, 77, 0, -1, 0);
   
   // 设置摄像机
   camera(width / 2, height / 2 + 1000, (height / 2) / tan(PI / 6) * 1.2, width / 2, height / 2, 0, 0, 1, 0);
@@ -44,36 +63,29 @@ void draw() {
     }
   }
   
-  // 绘制和更新球
-  if (ballLaunched) {
-    updateBall();
-  } else {
-    drawLaunchArrow();
-  }
+  // 绘制球
   drawBall();
-  
   // 绘制挡板
-  updatePaddle();
   drawPaddle();
 
-  // 检查碰撞
-  if (ballLaunched) {
-    checkBallBrickCollision();
-    checkBallPaddleCollision();
-  }
+  // 更新球的位置
+  if (!ballLaunched) {
+    drawLaunchArrow();
+  } 
+          updateBall();
+          updatePaddle();
+          checkBallBrickCollision();
+          checkBallPaddleCollision();
 }
 
 void keyPressed() {
-  if (!ballLaunched) {
-    if (key == 'a' || key == 'A') {
-      launchDirection -= PI / 36; // 向左旋转5度
-    } else if (key == 'd' || key == 'D') {
-      launchDirection += PI / 36; // 向右旋转5度
-    } else if (key == 'j' || key == 'J') {
-      launchBall();
-    }
-  }
+  keys[key] = true;
 }
+
+void keyReleased() {
+  keys[key] = false;
+}
+
 
 void drawLaunchArrow() {
   stroke(255);

@@ -1,4 +1,5 @@
 // Paddle.pde
+
 float paddleX;
 float paddleWidth = 80;
 float paddleHeight = 10;
@@ -10,16 +11,23 @@ void initPaddle() {
 }
 
 void updatePaddle() {
+  if (!ballLaunched) {
+    if (keys['a'] || keys['A']) {
+      launchDirection -= PI / 36; // 向左旋转5度
+    } 
+    if (keys['d'] || keys['D']) {
+      launchDirection += PI / 36; // 向右旋转5度
+    } 
+    if (keys['j'] || keys['J']) {
+      launchBall();
+    }
+  }
   if (ballLaunched) {
-    if (keyPressed) {
-      paddleSpeed = 5 * scaleFactor;
-      if (key == 'a' || key == 'A') {
-        paddleX -= paddleSpeed;
-      } else if (key == 'd' || key == 'D') {
-        paddleX += paddleSpeed;
-      }
-    } else {
-      paddleSpeed = 0;
+    if (keys['a'] || keys['A']) {
+      paddleX -= paddleSpeed*scaleFactor;
+    } 
+    if (keys['d'] || keys['D']) {
+      paddleX += paddleSpeed*scaleFactor;
     }
   }
   paddleX = constrain(paddleX, 0, width - paddleWidth * scaleFactor);
@@ -42,3 +50,5 @@ void checkBallPaddleCollision() {
     ballSpeedY = -ballSpeed * cos(angle);
   }
 }
+
+
