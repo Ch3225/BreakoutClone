@@ -11,7 +11,6 @@ void initBall() {
 }
 
 void updateBall() {
-  ballX += ballSpeedX;
   ballY += ballSpeedY;
   if (ballX < ballRadius || ballX > width - ballRadius) {
     ballSpeedX *= -1;
@@ -19,7 +18,7 @@ void updateBall() {
   if (ballY < ballRadius) {
     ballSpeedY *= -1;
   }
-  if (ballY - ballRadius > height) {
+  if (ballY > height - ballRadius) {
     reset();
   }
 }
