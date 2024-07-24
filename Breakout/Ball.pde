@@ -57,5 +57,6 @@ void handleCylinderCollision(int i) {
       // Increase score by 10000
       score += 10000;
     }
+    writeColor();
   }
 }

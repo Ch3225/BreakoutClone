@@ -1,3 +1,5 @@
+import processing.serial.*;
+Serial myPort;
 
 int brickRows = 5;
 int brickCols = 10;
@@ -11,6 +13,8 @@ int score = 0;
 int combo = 0;
 
 void setup() {
+  myPort = new Serial(this, "COM4", 9600);
+
   size(1800, 1200, P3D); // 使用P3D进行3D渲染
   scaleFactor = height / 400.0; // 计算缩放因子
   lights();
@@ -45,6 +49,8 @@ void reset() {
   setupCylinders();
   score = 0;
   combo = 0;
+
+  writeColor();
 }
 
 void draw() {
