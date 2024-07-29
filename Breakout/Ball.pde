@@ -38,6 +38,7 @@ void handleCylinderCollision(int i) {
   float distance = sqrt(dx * dx + dy * dy);
 
   if (distance < ballRadius + radius[i]) {
+    playSound();
     // Reflect the ball using the tangent direction
     float normalX = dx / distance;
     float normalY = dy / distance;

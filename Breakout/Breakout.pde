@@ -1,4 +1,6 @@
 import processing.serial.*;
+import processing.sound.*;
+SoundFile sound;
 Serial myPort;
 
 int brickRows = 5;
@@ -21,20 +23,7 @@ void setup() {
   reset();
   frameRate(60);
 
-  new Thread(new Runnable() {
-  public void run() {
-    while (true) {
-      println("Thread is running...");
-
-      // 物理计算代码...
-      try {
-        Thread.sleep(15);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-}).start();
+  sound = new SoundFile(this, "sounds/1DD94C1418A943.mp3");
 }
 
 void reset() {
@@ -149,4 +138,8 @@ void drawBox() {
 
   // Draw the top
   line(0, 0, width, 0);
+}
+
+void playSound() {
+  sound.play();
 }

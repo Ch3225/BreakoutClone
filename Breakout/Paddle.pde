@@ -43,6 +43,7 @@ void drawPaddle() {
 
 void checkBallPaddleCollision() {
   if (ballY + ballRadius * scaleFactor > height - paddleHeight * scaleFactor && ballX + ballRadius * scaleFactor > paddleX && ballX - ballRadius * scaleFactor < paddleX + paddleWidth * scaleFactor) {
+    playSound();
     float hitPos = (ballX - paddleX) / (paddleWidth * scaleFactor); // 计算击打位置的相对位置 (0.0到1.0之间)
     float angle = map(hitPos, 0, 1, -PI / 4, PI / 4); // 将击打位置映射到反弹角度
     float ballSpeed = sqrt(ballSpeedX * ballSpeedX + ballSpeedY * ballSpeedY); // 计算球速;

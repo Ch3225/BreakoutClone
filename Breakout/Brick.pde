@@ -34,6 +34,7 @@ void checkBallBrickCollision() {
           // 碰撞发生
           bricks[i][j] = false;
           hit(); // 击中砖块
+          playSound();
           
           // 判断碰撞类型
           boolean isHorizontal = ballX >= brickX && ballX <= brickX + adjustedBrickWidth;
